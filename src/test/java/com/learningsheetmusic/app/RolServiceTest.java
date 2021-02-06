@@ -3,7 +3,7 @@ package com.learningsheetmusic.app;
 
 import com.learningsheetmusic.app.entity.Role;
 import com.learningsheetmusic.app.service.RoleService;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,12 +27,27 @@ public class RolServiceTest {
     RoleService roleService;
 
     @Test
-    public void test01(){
+    public void test01RoleAdminCanBeFindById(){
 
         Optional<Role> oRole = roleService.findById(1L);
 
         assertEquals(oRole.get().getName(), "admin");
     }
 
+    @Test
+    public void test02RoleTeacherCanBeFindByName(){
+        Optional<Role> oRole = roleService.findByName("teacher");
 
+        assertEquals(oRole.get().getName(), "teacher");
+    }
+
+    @Test
+    public void test03CantAddRoleWhichAlreadyExists(){
+        assertThrows(RuntimeException.class, () -> roleService.save(new Role("admin")));
+    }
+
+    @Test
+    public void test04CanAddNewRole(){
+        assertEquals("writer", roleService.save(new Role("writer")).getName());
+    }
 }

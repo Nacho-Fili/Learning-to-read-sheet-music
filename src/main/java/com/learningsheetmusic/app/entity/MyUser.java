@@ -2,6 +2,7 @@ package com.learningsheetmusic.app.entity;
 
 import com.learningsheetmusic.app.service.RoleService;
 import com.learningsheetmusic.app.service.RoleServiceImpl;
+import org.hibernate.annotations.Cascade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,6 +19,13 @@ public class MyUser {
 
     public MyUser(){};
 
+    public MyUser(String username, String password, String mail, List<Role> roles){
+        this.username = username;
+        this.password = password;
+        this.mail = mail;
+        this.role = roles;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -31,13 +39,16 @@ public class MyUser {
     @Column(length = 90)
     private String password;
 
-    @ManyToMany
+    @ManyToMany(cascade=CascadeType.PERSIST)
     @JoinTable(
             name = "user_role",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id")}
     )
     private List<Role> role = new ArrayList<>();
+
+
+    //-------------------------------------------------------------//
 
     public String getUsername() { return this.username; }
 
@@ -55,27 +66,23 @@ public class MyUser {
 
     public List<Role> getRole(){ return this.role; }
 
-    public void encodePassword(PasswordEncoder passwordEncoder) {
-        this.password = passwordEncoder.encode(this.password);
-    }
-
     public void build(MyUser user, RoleService roleService, PasswordEncoder passwordEncoder) {
         this.id = user.id;
         this.username = user.username;
         this.password = passwordEncoder.encode(user.password);
         this.mail = user.mail;
-        this.role.addAll(user
-                .getRole()
-                .stream()
-                .map((Role role) -> {
-                        System.out.println(roleService);
-                        Optional <Role> oRoleToAdd = roleService.findById(role.getId());
-                        if(oRoleToAdd.isEmpty())
-                            throw new RuntimeException("No existe un role con id " + role.getId());
-                        Role roleToAdd = oRoleToAdd.get();
-                        roleToAdd.getUsers().add(this);
-                        return roleToAdd;
-                }).collect(Collectors.toList())
-        );
+
+        List<Role> rolesToAdd = new ArrayList<>();
+
+        user.getRole().forEach(role -> {
+            Optional<Role> oRole = roleService.findById(role.getId());
+            if(oRole.isEmpty())
+                return;
+
+            rolesToAdd.add(oRole.get());
+        });
+
+        this.role = rolesToAdd;
+
     }
 }

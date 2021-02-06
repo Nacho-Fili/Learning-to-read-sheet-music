@@ -23,4 +23,20 @@ public class RoleServiceImpl implements RoleService{
     public Optional<Role> findById(Long id) {
         return roleRepository.findById(id);
     }
+
+    @Override
+    public Optional<Role> findByName(String name) { return roleRepository.findByName(name); }
+
+    @Override
+    public Role save(Role role){
+        if(this.existsByName(role.getName()))
+            throw new RuntimeException("That role already exists");
+
+        return roleRepository.save(role);
+    }
+
+    @Override
+    public boolean existsByName(String name) {
+        return roleRepository.existsByName(name);
+    }
 }

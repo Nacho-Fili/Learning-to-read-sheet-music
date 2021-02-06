@@ -18,6 +18,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Service("myUserService")
 public class UserServiceImpl implements UserDetailsService, UserService {
@@ -50,16 +52,51 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
-    public Optional<MyUser> findById(Long id) {
-        return userRepository.findById(id);
+    public List<MyUser> saveAll(List<MyUser> users){
+
+        users.forEach((MyUser user) -> user.build(user, roleService, passwordEncoder));
+
+        return userRepository.saveAll(users);
     }
 
     @Override
-    public Optional<MyUser> findByUsername(String username) { return userRepository.findByUsername(username); }
+    public Optional<MyUser> findById(Long id) {
+        Optional<MyUser> user;
+        try{
+            user = userRepository.findById(id);
+        }
+        catch (Error e){
+            user = Optional.empty();
+        }
+
+        return user;
+    }
+
+    @Override
+    public Optional<MyUser> findByUsername(String username) {
+        Optional<MyUser> user;
+        try{
+            user = userRepository.findByUsername(username);
+        }
+        catch (Error e){
+            user = null;
+        }
+
+        return user;
+    }
 
     @Override
     public void deleteById(Long id) {
-        userRepository.deleteById(id);
+        if(this.existsById(id))
+            userRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean existsByUsername(String username){ return userRepository.existsByUsername(username); }
+
+    @Override
+    public boolean existsById(Long id){
+        return userRepository.existsById(id);
     }
 
     @Override

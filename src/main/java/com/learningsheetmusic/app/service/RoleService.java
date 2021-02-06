@@ -8,4 +8,9 @@ public interface RoleService {
 
     Optional<Role> findById(Long id);
 
+    Optional<Role> findByName(String teacher);
+
+    Role save(Role admin);
+
+    boolean existsByName(String name);
 }

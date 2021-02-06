@@ -11,6 +11,15 @@ public class Role {
 
     public Role(){};
 
+    public Role(String name){
+        this.name = name;
+    };
+
+    public Role(String name, Long id){
+        this.name = name;
+        this.id = id;
+    };
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
