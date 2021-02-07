@@ -100,6 +100,15 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
+    public List<MyUser> getAllByCreatedBy(String createdBy){
+        return userRepository.getAllByCreatedBy(createdBy);
+    }
+
+    public void deleteAllById(List<Long> usersToDelete){
+        usersToDelete.forEach((id) -> userRepository.deleteById(id));
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<MyUser> oMyUser = userRepository.findByUsername(username);
         MyUser myUser = oMyUser.get();

@@ -1,0 +1,7 @@
+@media screen and (max-width: 800px) {
+    Ul {
+        list-style-type: disc;
+        width: 60vw;
+        font-size: 0.75rem;
+    }
+}

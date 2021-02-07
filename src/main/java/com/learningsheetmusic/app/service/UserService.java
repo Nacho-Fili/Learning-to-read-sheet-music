@@ -13,7 +13,9 @@ public interface UserService {
     boolean existsByUsername(String username);
     boolean existsById(Long id);
     void deleteById(Long id);
-
+    void deleteAllById(List<Long> usersToDelete);
 
     List<MyUser> saveAll(List<MyUser> users);
+
+    List<MyUser> getAllByCreatedBy(String createdBy);
 }

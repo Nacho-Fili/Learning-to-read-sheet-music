@@ -47,8 +47,12 @@ public class MyUser {
     )
     private List<Role> role = new ArrayList<>();
 
+    @Column(length=50)
+    private String createdBy;
 
     //-------------------------------------------------------------//
+
+    public Long getId(){ return this.id; }
 
     public String getUsername() { return this.username; }
 
@@ -66,11 +70,18 @@ public class MyUser {
 
     public List<Role> getRole(){ return this.role; }
 
+    public String getCreatedBy(){return this.createdBy;}
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
     public void build(MyUser user, RoleService roleService, PasswordEncoder passwordEncoder) {
         this.id = user.id;
         this.username = user.username;
         this.password = passwordEncoder.encode(user.password);
         this.mail = user.mail;
+        this.createdBy = user.createdBy;
 
         List<Role> rolesToAdd = new ArrayList<>();
 

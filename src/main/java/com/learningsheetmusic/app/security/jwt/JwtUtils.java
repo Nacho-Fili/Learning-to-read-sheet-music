@@ -22,7 +22,7 @@ public class JwtUtils {
                 .signWith(SignatureAlgorithm.HS512, SECRET)
                 .compact();
 
-        res.addHeader("Authorization", "Bearer" + token);
+        res.addHeader("Authorization", "Bearer " + token);
     }
 
     public static Authentication getAuthentication(HttpServletRequest req) {
