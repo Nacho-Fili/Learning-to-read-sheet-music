@@ -29,6 +29,8 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
         InputStream body = req.getInputStream();
         UserLogin user = new ObjectMapper().readValue(body, UserLogin.class);
 
+        System.out.println(user);
+
         return getAuthenticationManager().authenticate(
                 new UsernamePasswordAuthenticationToken(
                         user.getUsername(),

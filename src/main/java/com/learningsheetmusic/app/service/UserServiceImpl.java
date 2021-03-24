@@ -111,7 +111,12 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<MyUser> oMyUser = userRepository.findByUsername(username);
-        MyUser myUser = oMyUser.get();
+        MyUser myUser;
+        if (oMyUser.isPresent()){
+            myUser = oMyUser.get();
+        } else {
+            throw new UsernameNotFoundException("Usuario ${username} no encontrado");
+        }
         Optional<Role> role = roleRepository.findById(myUser.roleId());
 
         if (role.isEmpty())

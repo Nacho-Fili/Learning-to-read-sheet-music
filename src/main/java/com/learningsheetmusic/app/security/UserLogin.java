@@ -14,4 +14,20 @@ public class UserLogin {
     public String getPassword(){
         return this.password;
     }
+
+    public void setUsername(String username){
+        this.username = username;
+    }
+
+    public void setPassword(String password){
+        this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "UserLogin{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }

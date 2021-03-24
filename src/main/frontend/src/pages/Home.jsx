@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import Img from "./Img";
+import Img      from "../components/Img";
 import pianoImg from "../img/piano.jpg";
-import Section from "./Section";
-import Div from "./Div";
-import Footer from "./Footer";
-import H1 from "./H1";
-import Header from "./Header";
-import P from "./P";
+import Section  from "../components/Section";
+import Div      from "../components/Div";
+import Footer   from "../components/Footer";
+import H1       from "../components/H1";
+import Header   from "../components/Header";
+import P        from "../components/P";
 
 
 export default class Home extends Component{

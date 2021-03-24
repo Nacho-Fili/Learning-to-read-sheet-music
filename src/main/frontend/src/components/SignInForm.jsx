@@ -21,42 +21,7 @@ const style = {
     },
 }
 
-function validate(fields) {
-    const errors = {};
 
-    if(!fields.username)
-        errors.username = 'username field is not optional!'
-    else
-        if(fields.username.includes(' '))
-            errors.username = "password can't contains white chars"
-
-    if(!fields.password)
-        errors.password = 'password field is not optional!'
-
-    if(!fields.email)
-        errors.email = 'email field is not optional'
-    else
-        if(fields.email.includes(' '))
-            errors.email = "email can't contains white chars"
-
-    return errors
-}
-
-const sendForm = (fields) => {
-    console.log(API_KEY)
-    axiosInstance.post('/api/users', {
-        username: fields.username,
-        password: fields.password,
-        mail: fields.email,
-        createdBy: 'test',
-        role: {
-            id: 2,
-            name: 'simpleUser'
-        }
-    })
-        .then (response => console.log(response))
-        .catch(e => console.log(e))
-}
 
 export default class SignInFormForm extends Component {
     state = {
@@ -84,11 +49,7 @@ export default class SignInFormForm extends Component {
         const {errors} = this.state
         return (
             <form style={style.form} action="" onSubmit={this.handleSubmit} onChange={this.handleChange}>
-                <Input name='username' type='text' className='section__form--input' placeholder='Nombre de usuario' style={style.input}/>
-                {errors.username && <P>{errors.username}</P>}
-                <Input name='password' type='password' className='section__form--input' placeholder='Contraseña' style={style.input}/>
-                {errors.password && <P>{errors.password}</P>}
-                <Input name='email' type='email' className='section__form--input' placeholder='E-Mail' style={style.input}/>
+
                 {errors.email && <P>{errors.email}</P>}
                 <SubmitButton/>
             </form>

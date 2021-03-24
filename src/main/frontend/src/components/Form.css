@@ -1,11 +1,10 @@
 .section__form--main-input::placeholder {
     font-family: 'Fira Sans', sans-serif;
-    color: #fff5c0;
     font-size: 1.1rem;
 }
 
 .section__form--input::placeholder {
     font-family: 'Fira Sans', sans-serif;
-    color: #fff5c0;
+    color: rgba(255, 255, 255, 0.7);
     font-size: 1.1rem;
 }
