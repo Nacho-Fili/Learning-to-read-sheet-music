@@ -20,12 +20,13 @@ export default function useForm(init){
         return newErrors
     }
 
-    const handleSubmit= (e, service, fields) => {
+    const handleSubmit= async (e, service, fields, history) => {
         e.preventDefault()
         const localErrors = validate(fields)
 
         if(Object.keys(localErrors).length === 0) {
-            service(fields)
+            await service(fields)
+                .then(p => history.push('/'))
                 .catch(err => {
                     setErrors({...errors, credentials: "El nombre de usuario o la contraseña son incorrectos"})
                     e.target.reset()

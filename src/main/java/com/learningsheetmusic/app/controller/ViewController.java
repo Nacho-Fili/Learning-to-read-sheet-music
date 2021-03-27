@@ -21,4 +21,8 @@ public class ViewController {
         return "index";
     }
 
+    @RequestMapping("/game")
+    public String reactGame(){
+        return "index";
+    }
 }

@@ -5,9 +5,10 @@ import Home     from    "./pages/Home"
 import SignIn   from    "./pages/SignIn"
 import NavBar   from    "./components/NavBar"
 import colors   from    "./colors/colors"
-import Div      from    "./components/Div";
-import Flex     from    "./utils/Flex";
 import { UserContextProvider } from './context/UserContext'
+import UserBar from "./components/UserBar";
+import Game from "./pages/Game";
+import {GameContextProvider} from "./context/GameContext";
 
 
 const style = {
@@ -23,6 +24,7 @@ function App() {
 
     return (
       <UserContextProvider>
+          <GameContextProvider>
               <Router>
                   <NavBar>
                       <Link to="/" style={style.link}>
@@ -35,14 +37,17 @@ function App() {
                           Sign in
                       </Link>
                   </NavBar>
-                  <Div height='50px' display={Flex} alignItems={'flex-end'} > </Div>
+                  <UserBar />
                   <switch>
-                      <Route    exact path={"/login-page"}       component={Login}    />
-                      <Route     exact path={"/sign-in"}    component={SignIn}  />
-                      <Route    exact path={"/"}            component={Home}     />
+                      <Route    exact path={"/login-page"}      component={Login}   />
+                      <Route    exact path={"/sign-in"}         component={SignIn}  />
+                      <Route    exact path={"/game"}            component={Game}    />
+                      <Route    exact path={"/"}                component={Home}    />
                   </switch>
               </Router>
+          <div>Icons made by <a href="https://www.flaticon.com/authors/those-icons" title="Those Icons">Those Icons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
           <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+          </GameContextProvider>
       </UserContextProvider>
   );
 }

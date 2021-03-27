@@ -7,7 +7,10 @@ export default function UseUser(){
 
     const login = ({username, password}) =>
         loginService({username, password})
-            .then(jwt => setJWT(jwt))
+            .then(jwt => {
+                localStorage.setItem('jwt', jwt)
+                setJWT(jwt)
+            })
             .catch(e => {
                 console.error(e)
                 throw new Error(e)
@@ -17,8 +20,14 @@ export default function UseUser(){
 
     const isLogged = () => Boolean(jwt)
 
+    const logout = () => {
+        localStorage.removeItem('jwt')
+        setJWT(null)
+    }
+
     return({
         isLogged,
-        login
+        login,
+        logout
     })
 }

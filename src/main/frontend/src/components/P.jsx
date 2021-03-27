@@ -8,10 +8,16 @@ const style = {
 export default class P extends Component {
     render() {
 
-        const {children} = this.props
+        const {children, onMouseEnter, onMouseLeave} = this.props
 
         return (
-            <p style={style}>{children}</p>
+            <p style={style}
+               onMouseEnter={onMouseEnter}
+               onMouseLeave={onMouseLeave}>
+
+                {children}
+
+            </p>
         )
     }
 }

@@ -4,17 +4,16 @@ import colors from '../colors/colors'
 
 const style = {
     color: colors.light,
-    fontSize: '130%',
-    margin: '0 0 15px 0'
+    fontSize: '80%',
 }
 
 export default class Li extends Component {
     render() {
 
-        const {children} = this.props
+        const {children, onClick} = this.props
 
         return (
-            <li style={style}>{children}</li>
+            <li onClick={onClick} style={style}>{children}</li>
         )
     }
 }

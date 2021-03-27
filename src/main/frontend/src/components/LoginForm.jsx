@@ -29,9 +29,6 @@ export default function Form () {
 
     const submit = e =>{
         handleSubmit(e, login, {username, password}, history)
-        if(isLogged())
-            history.push('/')
-
     }
 
     return (
