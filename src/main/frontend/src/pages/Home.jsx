@@ -9,11 +9,19 @@ import Header   from "../components/Header";
 import P        from "../components/P";
 import Button   from "../components/Button";
 import { useHistory } from "react-router-dom"
+import UseGame from "../hooks/UseGame";
 
 
 export default function Home (){
 
     const history = useHistory()
+
+    const {start} = UseGame()
+
+    const startGame = () => {
+        history.push('/game')
+        start()
+    }
 
     return(
         <>
@@ -28,7 +36,7 @@ export default function Home (){
                     Bienvenido a la aplicación dedicada a aprender a leer
                     partituras jugando!
                 </P>
-                <Button onClick={() => history.push('/game')} text='Jugar'/>
+                <Button onClick={startGame} text='Jugar'/>
             </Section>
             <Footer/>
         </>

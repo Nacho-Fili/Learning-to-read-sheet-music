@@ -1,6 +1,7 @@
 import WhiteLine from './WhiteLine'
 import BlackLine from './BlackLine'
 import colors from "../colors/colors";
+import gNotes from "../data/gNotes";
 
 
 export default function Staff(){
@@ -25,8 +26,8 @@ export default function Staff(){
     const longStaffLines = []
 
     for (let i = 1; i < 12; i++) {
-        shortStaffLines.push(i % 2 ? <WhiteLine /> : <BlackLine />)
-        longStaffLines.push(i % 2 ? <WhiteLine /> : <BlackLine />)
+        shortStaffLines.push(i % 2 ? <WhiteLine playable={false}/> : <BlackLine playable={false}/>)
+        longStaffLines.push(i % 2 ? <WhiteLine note={gNotes[12-i]} playable={true}/> : <BlackLine note={gNotes[12-i]} playable={true}/>)
     }
 
     return(

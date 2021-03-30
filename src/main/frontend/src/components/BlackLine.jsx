@@ -1,6 +1,8 @@
 import colors from "../colors/colors";
+import White from "./White";
+import UseGame from "../hooks/UseGame";
 
-export default function BlackLine(){
+export default function BlackLine({playable, note}){
 
     const style = {
         line: {
@@ -9,18 +11,13 @@ export default function BlackLine(){
             backgroundColor: colors.light,
             display: 'flex',
             alignItems: 'center'
-        },
-
-        white: {
-            borderRadius: '30px',
-            width: '12px',
-            height: '8px',
-            backgroundColor: 'rgba(255, 255, 255, 0)',
-            border: '2px solid white',
-            position: 'relative',
-            left: '50px'
         }
     }
+
+    const {notes} = UseGame()
+
+    console.log(note)
+    console.log(notes)
 
     return(
         <div style={{
@@ -31,8 +28,8 @@ export default function BlackLine(){
             width: '100%',
         }}>
             <div style={style.line}>
-                <div style={style.white}/>
-            </div>
+                {(playable === true && notes === note) && <White/>}
+            </div   >
         </div>
     )
 }

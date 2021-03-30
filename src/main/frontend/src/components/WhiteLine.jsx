@@ -1,7 +1,8 @@
-
+import White from "./White"
 import colors from "../colors/colors";
+import UseGame from "../hooks/UseGame";
 
-export default function WhiteLine(){
+export default function WhiteLine({playable, note}){
     const style = {
         line: {
             height: '3px',
@@ -9,16 +10,10 @@ export default function WhiteLine(){
             backgroundColor: colors.midStrong,
             display: 'flex',
             alignItems: 'center'
-        },
-
-        white: {
-            borderRadius: '30px',
-            width: '12px',
-            height: '8px',
-            backgroundColor: 'rgba(255, 255, 255, 0)',
-            border: '2px solid white'
         }
     }
+
+    const { notes } = UseGame()
 
     return(
         <div style={{
@@ -28,7 +23,7 @@ export default function WhiteLine(){
             alignItems: 'center'
         }}>
             <div style={style.line}>
-                <div style={style.white}/>
+                {(playable === true && notes === note) && <White/>}
             </div>
         </div>
     )
