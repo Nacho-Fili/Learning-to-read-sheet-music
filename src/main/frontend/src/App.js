@@ -8,7 +8,7 @@ import colors   from    "./colors/colors"
 import { UserContextProvider } from './context/UserContext'
 import UserBar from "./components/UserBar";
 import Game from "./pages/Game";
-import {GameContextProvider} from "./context/GameContext";
+import { GameContextProvider } from './context/GameContext'
 
 
 const style = {
@@ -47,7 +47,7 @@ function App() {
               </Router>
           <div>Icons made by <a href="https://www.flaticon.com/authors/those-icons" title="Those Icons">Those Icons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
           <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
-          </GameContextProvider>
+        </GameContextProvider>
       </UserContextProvider>
   );
 }

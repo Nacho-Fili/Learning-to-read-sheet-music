@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 const Context = React.createContext({})
 
 
-export function UserContextProvider({children}){
+export function UserContextProvider({ children }){
 
     const [jwt, setJWT] = useState(localStorage.getItem('jwt'))
 

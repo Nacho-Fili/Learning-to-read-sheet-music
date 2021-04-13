@@ -16,11 +16,8 @@ export default function Home (){
 
     const history = useHistory()
 
-    const {start} = UseGame()
-
     const startGame = () => {
         history.push('/game')
-        start()
     }
 
     return(

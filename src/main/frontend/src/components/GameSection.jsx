@@ -18,7 +18,7 @@ export default function GameSection(){
             height: '80%',
         }}>
             <div style={style.staffContainer}>
-                <Staff />
+                <Staff/>
             </div>
         </div>
     )

@@ -1,8 +1,9 @@
 import colors from "../colors/colors";
-import White from "./White";
+import Whites from "./Whites";
 import UseGame from "../hooks/UseGame";
+import { useEffect, useState } from "react"
 
-export default function BlackLine({playable, note}){
+export default function BlackLine({ playable, note }){
 
     const style = {
         line: {
@@ -11,25 +12,37 @@ export default function BlackLine({playable, note}){
             backgroundColor: colors.light,
             display: 'flex',
             alignItems: 'center'
-        }
-    }
+        },
 
-    const {notes} = UseGame()
-
-    console.log(note)
-    console.log(notes)
-
-    return(
-        <div style={{
+        container: {
             backgroundColor: colors.midStrong,
             height: '6px',
             display: 'flex',
             alignItems: 'center',
             width: '100%',
-        }}>
-            <div style={style.line}>
-                {(playable === true && notes === note) && <White/>}
-            </div   >
+        }
+    }
+
+    const { notesToRender, setNotesToRender } = UseGame()
+
+    const [ quantity, setQuantity ] = useState(0)
+
+    useEffect(() => {
+        const interval = window.setInterval(() => {
+            if(notesToRender[note]){
+                quantity++
+                setNotesToRender({...notesToRender, [note]: false})
+            }
+        }) 
+
+        return () => window.clearInterval(interval)
+    }) 
+
+    return(
+        <div style={ style.container }>
+            <div style={ style.line }>
+                <Whites amount={quantity} />
+            </div>
         </div>
     )
 }

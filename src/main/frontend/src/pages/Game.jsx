@@ -7,12 +7,12 @@ import UseGame from "../hooks/UseGame";
 
 export default function Game(){
 
-    const {score} = UseGame()
+    const { score } = UseGame()
 
     return (
         <>
             <Header>
-                <H1>SCORE: {score}</H1>
+                <H1>SCORE: { score }</H1>
             </Header>
 
             <GameSection/>

@@ -1,7 +1,10 @@
-import WhiteLine from './WhiteLine'
-import BlackLine from './BlackLine'
 import colors from "../colors/colors";
+import ShortStaffLines from "./ShortStaffLines"
+import LongStaffLines from "./LongStaffLines"
+import UseGame from "../hooks/UseGame";
+import { useEffect } from "react";
 import gNotes from "../data/gNotes";
+
 
 
 export default function Staff(){
@@ -22,21 +25,26 @@ export default function Staff(){
         }
     }
 
-    const shortStaffLines = []
-    const longStaffLines = []
+    const { notesToRender, setNotesToRender } = UseGame()
 
-    for (let i = 1; i < 12; i++) {
-        shortStaffLines.push(i % 2 ? <WhiteLine playable={false}/> : <BlackLine playable={false}/>)
-        longStaffLines.push(i % 2 ? <WhiteLine note={gNotes[12-i]} playable={true}/> : <BlackLine note={gNotes[12-i]} playable={true}/>)
-    }
+    const randomElement = array => array[Math.floor(Math.random() * array.length)]
+
+    useEffect(() => {
+        const interval = window.setInterval(() => { 
+            setNotesToRender({...notesToRender, [randomElement(gNotes)]: true}) 
+            console.log(notesToRender)
+        }, 2000)
+
+        return () => clearInterval(interval)
+    }) 
 
     return(
         <div style={{display:'flex'}}>
             <div style={style.noGameSection}>
-                {shortStaffLines}
+                <ShortStaffLines/>
             </div>
             <div style={style.gameSection}>
-                {longStaffLines}
+                <LongStaffLines/>
             </div>
         </div>
     )

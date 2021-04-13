@@ -1,4 +1,5 @@
-import {useState} from "react/cjs/react.production.min";
+import { useEffect, useState } from "react"
+
 
 export default function White(){
     const style = (positionLeft) => ({
@@ -8,15 +9,23 @@ export default function White(){
         backgroundColor: 'rgba(255, 255, 255, 0)',
         border: '2px solid white',
         position: 'relative',
-        left: positionLeft
-
+        left: positionLeft,
+        display: positionLeft < -20 ? 'none' : null
     })
 
-    const [positionLeft, setPositionLeft] = useState()
+    const [ position, setPosition ] = useState(400)
 
-    window.setInterval(() => setPositionLeft(positionLeft - 1), 100)
+    useEffect(() => {
+        const interval = window.setInterval(() => {
+            setPosition(position - 10)
+        }, 1000)
+
+        return () => clearInterval(interval)
+    })
 
     return(
-        <div style={style(positionLeft)}/>
+        <>
+            <div style={style(position)}/>
+        </>
     )
 }

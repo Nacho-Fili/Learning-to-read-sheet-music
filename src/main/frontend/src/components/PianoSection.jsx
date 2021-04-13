@@ -18,7 +18,7 @@ export default function PianoSection(){
     const pianoKeys = []
 
     for (let i = 0; i < notes.length; i++)
-        pianoKeys.push(<PianoKey note={notes[i]}/>)
+        pianoKeys.push(<PianoKey key={`piano-${notes[12 - i]}`} note={notes[i]}/>)
 
 
 

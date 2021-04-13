@@ -1,18 +1,21 @@
-import {createContext, useState} from "react";
+import React, { useState } from 'react'
+import gNotes from '../data/gNotes'
 
+const Context = React.createContext({})
 
-const Context = createContext({})
+export function GameContextProvider({ children }){
 
-export function GameContextProvider({children}){
+    const initialNotes = {}
+    gNotes.forEach(gNote => initialNotes[gNote] = false)
 
-    const [score, setScore] = useState(0)
-    const [notes, setNotes] = useState([])
+    const [notesToRender, setNotesToRender] = useState(initialNotes)
+    const [score, setScore] = useState(1200)
 
     const state = {
+        notesToRender, 
+        setNotesToRender,
         score,
-        setScore,
-        notes,
-        setNotes
+        setScore
     }
 
     return(

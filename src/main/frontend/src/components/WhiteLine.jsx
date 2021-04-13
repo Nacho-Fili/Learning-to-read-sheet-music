@@ -1,8 +1,10 @@
-import White from "./White"
+import { useEffect, useState } from "react";
 import colors from "../colors/colors";
 import UseGame from "../hooks/UseGame";
+import White from "./White"
 
-export default function WhiteLine({playable, note}){
+
+export default function WhiteLine({ playable, note }){
     const style = {
         line: {
             height: '3px',
@@ -10,20 +12,40 @@ export default function WhiteLine({playable, note}){
             backgroundColor: colors.midStrong,
             display: 'flex',
             alignItems: 'center'
-        }
-    }
-
-    const { notes } = UseGame()
-
-    return(
-        <div style={{
+        },
+        
+        container: {
             backgroundColor: colors.midStrong,
             height: '10px',
             display: 'flex',
             alignItems: 'center'
-        }}>
+        }
+    }
+
+    const { notesToRender, setNotesToRender } = UseGame()
+
+    const whites = []
+
+    const RenderNote = ({state}) => {
+        let ret = null
+
+        if(state[note] && playable)
+            whites.push(<White />)
+
+        return null
+    }
+
+    useEffect(() => {
+        setNotesToRender({...notesToRender, [note]: false})
+    }, [ notesToRender[note] ])
+
+    return(
+        <div style={style.container}>
             <div style={style.line}>
-                {(playable === true && notes === note) && <White/>}
+                <RenderNote state={notesToRender} />
+                {
+                    whites.map(white => white)
+                }
             </div>
         </div>
     )
