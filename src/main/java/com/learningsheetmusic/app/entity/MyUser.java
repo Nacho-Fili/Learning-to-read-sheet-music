@@ -1,29 +1,23 @@
 package com.learningsheetmusic.app.entity;
 
-import com.learningsheetmusic.app.service.RoleService;
-import com.learningsheetmusic.app.service.RoleServiceImpl;
-import org.hibernate.annotations.Cascade;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+
 
 @Entity
-@Table (name = "user")
+@Table (name = "USER")
 public class MyUser {
 
     public MyUser(){};
 
-    public MyUser(String username, String password, String mail, List<Role> roles){
+    public MyUser(String username, String password, String mail, String createdBy){
         this.username = username;
         this.password = password;
         this.mail = mail;
-        this.role = roles;
+        this.createdBy = createdBy;
     }
 
     @Id
@@ -39,16 +33,23 @@ public class MyUser {
     @Column(length = 90)
     private String password;
 
-    @ManyToMany(cascade=CascadeType.PERSIST)
+    @ManyToMany(cascade=CascadeType.DETACH)
     @JoinTable(
-            name = "user_role",
-            joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_id")}
+            name = "USER_ROLE",
+            joinColumns = @JoinColumn(name = "USER_ID") ,
+            inverseJoinColumns = @JoinColumn(name = "ROLE_ID")
     )
     private List<Role> role = new ArrayList<>();
 
     @Column(length=50)
     private String createdBy;
+
+
+    @Column
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="user" )
+    private List<GameScore> scores= new ArrayList<>();
+
+
 
     //-------------------------------------------------------------//
 
@@ -76,24 +77,25 @@ public class MyUser {
         this.createdBy = createdBy;
     }
 
-    public void build(MyUser user, RoleService roleService, PasswordEncoder passwordEncoder) {
-        this.id = user.id;
-        this.username = user.username;
-        this.password = passwordEncoder.encode(user.password);
-        this.mail = user.mail;
-        this.createdBy = user.createdBy;
+    public List<GameScore> getScores() {
+        return scores;
+    }
 
-        List<Role> rolesToAdd = new ArrayList<>();
+    public void setScores(List<GameScore> scores) {
+        this.scores = scores;
+    }
 
-        user.getRole().forEach(role -> {
-            Optional<Role> oRole = roleService.findById(role.getId());
-            if(oRole.isEmpty())
-                return;
+    public void addGameScore(GameScore score){
+        scores.add(score);
+        score.setUser(this, createdBy);
+    }
 
-            rolesToAdd.add(oRole.get());
-        });
+    public void addRole(Role roleToAdd) {
+        this.role.add(roleToAdd);
+        roleToAdd.addUser(this);
+    }
 
-        this.role = rolesToAdd;
-
+    public void encodePassword(PasswordEncoder passwordEncoder) {
+        this.password = passwordEncoder.encode(password);
     }
 }

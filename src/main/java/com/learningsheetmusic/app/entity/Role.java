@@ -27,8 +27,7 @@ public class Role {
     @Column
     private String name;
 
-    @ManyToMany(mappedBy = "role")
-    @JsonIgnore
+    @ManyToMany(mappedBy = "role", fetch = FetchType.EAGER)
     private List<MyUser> users = new ArrayList<>();
 
     public Long getId(){
@@ -40,4 +39,8 @@ public class Role {
     }
 
     public List<MyUser>getUsers(){ return this.users; }
+
+    public void addUser(MyUser user) {
+        users.add(user);
+    }
 }

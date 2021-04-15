@@ -30,7 +30,7 @@ export default function BlackLine({ playable, note }){
     useEffect(() => {
         const interval = window.setInterval(() => {
             if(notesToRender[note]){
-                quantity++
+                setQuantity(quantity + 1)
                 setNotesToRender({...notesToRender, [note]: false})
             }
         }) 

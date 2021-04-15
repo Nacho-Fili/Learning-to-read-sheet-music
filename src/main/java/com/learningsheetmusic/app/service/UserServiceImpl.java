@@ -16,10 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 @Service("myUserService")
 public class UserServiceImpl implements UserDetailsService, UserService {
@@ -45,17 +42,14 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Override
     public MyUser save(MyUser user) {
-        MyUser newUser = new MyUser();
-        newUser.build(user, roleService, passwordEncoder);
+        if(user.getId() == null)
+            user.encodePassword(passwordEncoder);
 
-        return userRepository.save(newUser);
+        return userRepository.save(user);
     }
 
     @Override
     public List<MyUser> saveAll(List<MyUser> users){
-
-        users.forEach((MyUser user) -> user.build(user, roleService, passwordEncoder));
-
         return userRepository.saveAll(users);
     }
 

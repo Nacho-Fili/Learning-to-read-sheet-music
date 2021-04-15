@@ -5,6 +5,8 @@ import com.learningsheetmusic.app.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service("myRolService")
@@ -25,6 +27,17 @@ public class RoleServiceImpl implements RoleService{
     }
 
     @Override
+    public List<Role> findAllById(List<Long> ids) {
+        List<Role> roles = new ArrayList<>();
+        ids.forEach((id) -> {
+          Optional <Role> oRole = this.findById(id);
+            oRole.ifPresent(roles::add);
+        });
+
+        return roles;
+    }
+
+    @Override
     public Optional<Role> findByName(String name) { return roleRepository.findByName(name); }
 
     @Override
@@ -38,5 +51,10 @@ public class RoleServiceImpl implements RoleService{
     @Override
     public boolean existsByName(String name) {
         return roleRepository.existsByName(name);
+    }
+
+    @Override
+    public void deleteByName(String name) {
+        roleRepository.deleteByName(name);
     }
 }

@@ -1,4 +1,4 @@
-package com.learningsheetmusic.app;
+package com.learningsheetmusic.app.unit;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
